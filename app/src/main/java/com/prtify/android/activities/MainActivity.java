@@ -1,7 +1,9 @@
-package com.prtify.android;
+package com.prtify.android.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.prtify.android.R;
 
 public class MainActivity extends AppCompatActivity {
 
