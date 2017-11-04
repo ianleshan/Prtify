@@ -9,6 +9,6 @@ package com.prtify.android.services;
        BRAIN FUNGUS!
 
  */
-public class SpotifyApi {
+public interface SpotifyApi {
     
 }
