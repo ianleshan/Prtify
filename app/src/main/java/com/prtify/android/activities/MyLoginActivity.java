@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.prtify.android.R;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
@@ -14,7 +15,7 @@ import com.spotify.sdk.android.authentication.AuthenticationResponse;
  * Created by leshan on 11/4/17.
  */
 
-public class LoginActivity extends AppCompatActivity{
+public class MyLoginActivity extends AppCompatActivity{
 
     // Request code will be used to verify if result comes from the login activity. Can be set to any integer.
     private static final int REQUEST_CODE = 1337;
@@ -39,6 +40,8 @@ public class LoginActivity extends AppCompatActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
+        //Toast.makeText(getApplicationContext(), "onActivityResult", Toast.LENGTH_SHORT).show();
+
         // Check if result comes from the correct activity
         if (requestCode == REQUEST_CODE) {
             AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, intent);
@@ -47,11 +50,17 @@ public class LoginActivity extends AppCompatActivity{
                 // Response was successful and contains auth token
                 case TOKEN:
                     // Handle successful response
+                    Intent i = new Intent(this, MainActivity.class);
+                    i.putExtra("key", response.getAccessToken());
+                    startActivity(i);
                     break;
 
                 // Auth flow returned an error
                 case ERROR:
                     // Handle error response
+
+                    Toast.makeText(getApplicationContext(), "ERROR" + response.toString(), Toast.LENGTH_SHORT).show();
+
                     break;
 
                 // Most likely auth flow was cancelled
