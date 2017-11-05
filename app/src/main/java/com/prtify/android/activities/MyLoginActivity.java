@@ -50,7 +50,7 @@ public class MyLoginActivity extends AppCompatActivity{
                 // Response was successful and contains auth token
                 case TOKEN:
                     // Handle successful response
-                    Intent i = new Intent(this, MainActivity.class);
+                    Intent i = new Intent(this, CreateRoomActivity.class);
                     i.putExtra("key", response.getAccessToken());
                     startActivity(i);
                     finish();

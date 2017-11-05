@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,12 +60,14 @@ public class MainActivity extends AppCompatActivity {
     String currentID = "";
     boolean wait = false;
 
-    String partyName = "orgy";
+    String partyName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
 
         title = (TextView) findViewById(R.id.title);
         artist = (TextView) findViewById(R.id.artist);
@@ -73,11 +76,12 @@ public class MainActivity extends AppCompatActivity {
         albumPicture = (ImageView) findViewById(R.id.album_picture);
         container = (LinearLayout) findViewById(R.id.container);
 
+        key = "Bearer " + getIntent().getStringExtra("key");
+        partyName = getIntent().getStringExtra("partyName");
+
         partyNameText.setText(partyName);
 
-        key = "Bearer " + getIntent().getStringExtra("key");
-
-        playFirstSong();
+        onPlayClick(title);
         updateSong();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -274,6 +278,14 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, ChooseDevice.class);
         i.putExtra("key", key);
         startActivity(i);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference partyRef = database.getReference("parties").child(partyName);
+        partyRef.removeValue();
     }
 
     public void onSelectDevicesClick(View view) {
