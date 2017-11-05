@@ -13,4 +13,8 @@ public class DeviceResponse {
     public DeviceResponse(List<Device> devices) {
         this.devices = devices;
     }
+
+    public List<Device> getDevices() {
+        return devices;
+    }
 }

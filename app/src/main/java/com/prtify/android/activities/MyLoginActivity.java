@@ -31,7 +31,7 @@ public class MyLoginActivity extends AppCompatActivity{
         AuthenticationRequest.Builder builder =
                 new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
 
-        builder.setScopes(new String[]{"streaming"});
+        builder.setScopes(new String[]{"streaming", "user-read-playback-state", "user-read-private", "playlist-read", "playlist-read-private", "user-modify-playback-state"});
         AuthenticationRequest request = builder.build();
 
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
