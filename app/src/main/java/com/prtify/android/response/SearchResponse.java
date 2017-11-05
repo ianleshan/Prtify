@@ -23,7 +23,7 @@ public class SearchResponse {
     public QueueItem getFirst(){
         if(getTracks().getTotal() < 1)return null;
         CurrentItem item = tracks.getItems().get(0);
-        return new QueueItem(item.getName(), item.getAlbum().getName(), item.getArtists().get(0).getName(), item.getAlbum().getImages().get(0).getUrl());
+        return new QueueItem(item.getName(), item.getAlbum().getName(), item.getArtists().get(0).getName(), item.getAlbum().getImages().get(0).getUrl(), item.getId());
     }
 
     private class Tracks {
@@ -47,12 +47,13 @@ public class SearchResponse {
     private class CurrentItem {
         final CurrentAlbum album;
         final List<CurrentArtist> artists;
-        final String name;
+        final String name, id;
 
-        public CurrentItem(CurrentAlbum album, List<CurrentArtist> artists, String name) {
+        public CurrentItem(CurrentAlbum album, List<CurrentArtist> artists, String name, String id) {
             this.album = album;
             this.artists = artists;
             this.name = name;
+            this.id = id;
         }
 
         public CurrentAlbum getAlbum() {
@@ -65,6 +66,10 @@ public class SearchResponse {
 
         public String getName() {
             return name;
+        }
+
+        public String getId() {
+            return id;
         }
     }
 

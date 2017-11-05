@@ -61,6 +61,7 @@ public class MyLoginActivity extends AppCompatActivity{
                     // Handle error response
 
                     Toast.makeText(getApplicationContext(), "ERROR" + response.toString(), Toast.LENGTH_SHORT).show();
+                    finish();
 
                     break;
 

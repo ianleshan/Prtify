@@ -37,7 +37,9 @@ public class CurrentlyPlayingResponse {
         for(CurrentArtist artist: item.getArtists()){
             result +=  artist.getName() + ", ";
         }
-        return result;
+
+        if(result == "") return result;
+        return result.substring(0, result.length() - 2);
     }
 
     public String getAlbumPicture(){

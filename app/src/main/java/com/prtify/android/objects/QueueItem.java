@@ -6,13 +6,14 @@ package com.prtify.android.objects;
 
 public class QueueItem {
 
-    final String name, album, artist, image;
+    final String name, album, artist, image, id;
 
-    public QueueItem(String name, String album, String artist, String image) {
+    public QueueItem(String name, String album, String artist, String image, String id) {
         this.name = name;
         this.album = album;
         this.artist = artist;
         this.image = image;
+        this.id = id;
     }
 
     public String getName() {
@@ -29,5 +30,9 @@ public class QueueItem {
 
     public String getImage() {
         return image;
+    }
+
+    public String getId() {
+        return id;
     }
 }

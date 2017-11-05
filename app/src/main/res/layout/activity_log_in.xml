@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/colorAccent"
     android:layout_height="match_parent">
 
     <TextView
@@ -10,7 +11,7 @@
         android:gravity="center"
         android:fontFamily="@font/product_sans_bold"
         android:textSize="28sp"
-        android:textColor="#1de9b6"
+        android:textColor="#111111"
         android:layout_gravity="center"
         android:text="Signing in..."/>
 

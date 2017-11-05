@@ -66,6 +66,7 @@ public class ChooseDevice extends AppCompatActivity {
                         Log.d("TO_STRING", response.toString() + "");
                         Log.d("MESSAGE", response.message() + "");
                         Log.d("CODE", response.code() + "");
+                        finish();
                     }
 
                     @Override
