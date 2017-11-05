@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:padding="15dp">
 
     <TextView
-        android:padding="10dp"
+        android:padding="1dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textColor="#e7ffffff"
+        android:text="Name"
+        android:fontFamily="@font/product_sans_bold"
+        android:id="@+id/device_name"/>
+
+    <TextView
+        android:padding="1dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:id="@+id/device_name"/>
+        android:text="Type"
+        android:fontFamily="@font/product_sans_regular"
+        android:id="@+id/device_type"/>
 
 </LinearLayout>

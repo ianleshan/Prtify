@@ -34,7 +34,11 @@ public class CreateRoomActivity extends AppCompatActivity {
                 {
                     public void onClick(View view)
                     {
-                        myRef.child("parties").child(pName.getText().toString());
+                        DatabaseReference ref = myRef.child("parties").child(pName.getText().toString());
+                        ref.child("name").setValue(pName.getText().toString());
+//                        ref.child("users").setValue(null);
+//                        ref.child("queue").setValue(null);
+//                        ref.child("requests").setValue(null);
                     }
                 }
         );

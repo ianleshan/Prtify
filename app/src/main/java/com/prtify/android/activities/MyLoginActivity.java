@@ -53,6 +53,7 @@ public class MyLoginActivity extends AppCompatActivity{
                     Intent i = new Intent(this, MainActivity.class);
                     i.putExtra("key", response.getAccessToken());
                     startActivity(i);
+                    finish();
                     break;
 
                 // Auth flow returned an error

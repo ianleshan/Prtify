@@ -2,7 +2,9 @@ package com.prtify.android.services;
 
 import com.prtify.android.requests.DeviceRequest;
 import com.prtify.android.requests.TrackUriRequest;
+import com.prtify.android.response.CurrentlyPlayingResponse;
 import com.prtify.android.response.DeviceResponse;
+import com.prtify.android.response.SearchResponse;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -11,6 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by leshan on 11/4/17.
@@ -24,7 +27,7 @@ import retrofit2.http.Path;
 public interface SpotifyApi {
 
     @GET("v1/me/player/currently-playing")
-    Call<ResponseBody> getCurrentlyPlaying(@Header("Authorization") String accessToken);
+    Call<CurrentlyPlayingResponse> getCurrentlyPlaying(@Header("Authorization") String accessToken);
 
     @GET("v1/me/player/devices")
     Call<DeviceResponse> getDevices(@Header("Authorization") String accessToken);
@@ -44,7 +47,7 @@ public interface SpotifyApi {
     @PUT("v1/me/player/volume?volume_percent={volumeValue}")
     Call<Void> setVolume(@Header("Authorization") String accessToken, @Path("volumeValue") int volumeValue);
 
-    @GET("v1/search?q={encodedTrack}&album:{album}%20artist:{artist}&type=track&offset=0")
-    Call<Void> search(@Header("Authorization") String accessToken, @Path("encodedTrack") String encodedTrack, @Path("album") String album, @Path("artist") String artist);
+    @GET("v1/search")
+    Call<SearchResponse> search(@Header("Authorization") String accessToken, @Query("q") String n, @Query("type") String t);
 
 }

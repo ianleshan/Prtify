@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="com.prtify.android.activities.CreateRoomActivity">
 
     <EditText
@@ -16,6 +17,7 @@
         android:layout_marginTop="8dp"
         android:hint="Party Name"
         android:inputType="text"
+        android:fontFamily="@font/product_sans_regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +32,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/product_sans_bold"
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
         android:text="Create Party"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

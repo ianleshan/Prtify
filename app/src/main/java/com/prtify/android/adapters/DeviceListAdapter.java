@@ -32,7 +32,8 @@ public class DeviceListAdapter  extends RecyclerView.Adapter<DeviceListAdapter.V
 
     @Override
     public void onBindViewHolder(DeviceListAdapter.ViewHolder holder, final int position) {
-        holder.mTextView.setText(mDataset.get(position).getName());
+        holder.name.setText(mDataset.get(position).getName());
+        holder.type.setText(mDataset.get(position).getType());
         Log.d("DEVICE", mDataset.get(position).getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,10 +55,12 @@ public class DeviceListAdapter  extends RecyclerView.Adapter<DeviceListAdapter.V
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView mTextView;
+        public TextView name;
+        public TextView type;
         public ViewHolder(View v) {
             super(v);
-            mTextView = v.findViewById(R.id.device_name);
+            name = v.findViewById(R.id.device_name);
+            type = v.findViewById(R.id.device_type);
         }
     }
 
