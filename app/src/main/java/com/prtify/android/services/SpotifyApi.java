@@ -44,8 +44,8 @@ public interface SpotifyApi {
     @PUT("v1/me/player/pause")
     Call<Void> pauseTrack(@Header("Authorization") String accessToken);
 
-    @PUT("v1/me/player/volume?volume_percent={volumeValue}")
-    Call<Void> setVolume(@Header("Authorization") String accessToken, @Path("volumeValue") int volumeValue);
+    @PUT("v1/me/player/volume")
+    Call<Void> setVolume(@Header("Authorization") String accessToken, @Query("volume_percent") int volumeValue);
 
     @GET("v1/search")
     Call<SearchResponse> search(@Header("Authorization") String accessToken, @Query("q") String n, @Query("type") String t);

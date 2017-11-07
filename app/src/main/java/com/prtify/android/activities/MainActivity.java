@@ -2,6 +2,8 @@ package com.prtify.android.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     TextView title, artist, album, partyNameText;
     ImageView albumPicture;
     LinearLayout container;
+    SeekBar volumeBar;
 
     String currentID = "";
     boolean wait = false;
@@ -75,6 +79,17 @@ public class MainActivity extends AppCompatActivity {
         partyNameText = (TextView) findViewById(R.id.party_name);
         albumPicture = (ImageView) findViewById(R.id.album_picture);
         container = (LinearLayout) findViewById(R.id.container);
+        volumeBar = (SeekBar) findViewById(R.id.volumeBar);
+
+        albumPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), QueueActivity.class);
+                i.putExtra("party", partyName);
+                startActivity(i);
+            }
+        });
+
 
         key = "Bearer " + getIntent().getStringExtra("key");
         partyName = getIntent().getStringExtra("partyName");
@@ -86,13 +101,45 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference partyRef = database.getReference("parties").child(partyName);
-        DatabaseReference requestRef = partyRef.child("requests");
+        final DatabaseReference requestRef = partyRef.child("requests");
         final DatabaseReference queueRef = partyRef.child("queue");
+
+        volumeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                Call<Void> call = service.setVolume(key, seekBar.getProgress());
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
 
         requestRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                if(dataSnapshot.getKey().equals("artist"))return;
+                if(dataSnapshot.getKey().equals("name"))return;
                 RequestItem item = dataSnapshot.getValue(RequestItem.class);
+                requestRef.child(dataSnapshot.getKey()).removeValue();
                 Call<SearchResponse> call = service.search(key, item.getName() + " " + item.getArtist(), "track");
                 call.enqueue(new Callback<SearchResponse>() {
                     @Override
@@ -119,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
                         newRef.child("votes").setValue(0);
                         newRef.child("upvotes").setValue(0);
                         newRef.child("downvotes").setValue(0);
+
                     }
 
                     @Override
@@ -187,6 +235,13 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<CurrentlyPlayingResponse>() {
             @Override
             public void onResponse(Call<CurrentlyPlayingResponse> call, Response<CurrentlyPlayingResponse> response) {
+                switch (response.code()){
+                    case 400:
+                        Intent i = new Intent(MainActivity.this, MyLoginActivity.class);
+                        startActivity(i);
+                        finish();
+                        break;
+                }
                 CurrentlyPlayingResponse b = response.body();
                 if (b == null) {
                     updateSong();
@@ -218,6 +273,8 @@ public class MainActivity extends AppCompatActivity {
                                     title.setTextColor(swatch.getTitleTextColor());
                                     artist.setTextColor(swatch.getBodyTextColor());
                                     album.setTextColor(swatch.getBodyTextColor());
+                                    volumeBar.getProgressDrawable().setColorFilter(swatch.getTitleTextColor(), PorterDuff.Mode.MULTIPLY);
+                                    volumeBar.getThumb().setColorFilter(swatch.getTitleTextColor(), PorterDuff.Mode.MULTIPLY);
                                     ((Button) (findViewById(R.id.connect_to_device))).setTextColor(swatch.getTitleTextColor());
                                 }
                             });
@@ -235,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
                     });
 //                    }
 
-                    if (!wait && b.getTimeLeft() < 1000){
+                    if (!wait && b.getTimeLeft() < 1500){
                         wait = true;
                         playNextSong();
                     }

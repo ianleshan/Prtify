@@ -109,6 +109,16 @@
 
     </LinearLayout>
 
+    <SeekBar
+        android:padding="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/volumeBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:min="0"
+        android:max="100"/>
+
     <Button
         android:id="@+id/connect_to_device"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
